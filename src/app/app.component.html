@@ -1,3 +1,17 @@
 <h1>Olá mundo {{nome}}!</h1>
 
-<app-produto-lista></app-produto-lista>
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/produtos" routerLinkActive="active" ariaCurrentWhenActive="page">Produtos</a>
+        </li>
+        <li>
+            <a routerLink="/filmes" routerLinkActive="active" ariaCurrentWhenActive="page">Filmes</a>
+        </li>
+        <li>
+            <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+        </li>
+    </ul>
+</nav>
+
+<router-outlet></router-outlet>
