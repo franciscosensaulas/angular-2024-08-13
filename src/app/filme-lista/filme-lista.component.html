@@ -2,11 +2,15 @@
 
 <button (click)="consultar()">Consultar</button>
 
+<div class="flex justify-content-end">
+    <p-button (onClick)="showDialog()" label="Cadastrar" icon="pi pi-plus" size="small" />
+</div>
+
 @if(carregandoFilmes === true){
 <span>Carregando filmes</span>
 } @else {
-<table>
-    <thead>
+<p-table [value]="filmes" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
         <tr>
             <th>Código</th>
             <th>Nome</th>
@@ -14,47 +18,83 @@
             <th>Orçamento</th>
             <th>Ação</th>
         </tr>
-    </thead>
-    <tbody>
-        @for(filme of filmes; track filme){
+    </ng-template>
+    <ng-template pTemplate="body" let-filme>
         <tr>
             <td>{{filme.id}}</td>
             <td>{{filme.nome}}</td>
             <td>{{filme.categoria}}</td>
             <td>{{filme.orcamento}}</td>
             <td>
-                <button>Editar</button>
-                <button (click)="apagar(filme.id)">Apagar</button>
+                <p-button 
+                    label="Editar" 
+                    severity="primary" 
+                    icon="pi pi-pencil" 
+                    (click)="editar()"
+                    class="mr-2"
+                    size="small"/>
+                <p-button 
+                    label="Apagar" 
+                    severity="danger" 
+                    icon="pi pi-trash" 
+                    (click)="apagar(filme.id)"
+                    size="small"/>
             </td>
         </tr>
-        }
-    </tbody>
-</table>
+    </ng-template>
+</p-table>
+
 }
 
-
-<div>
-    <label for="nome">Nome</label>
-    <input type="text" id="nome" [(ngModel)]="nome">
-</div>
-<div>
-    <label for="duracao">Duração</label>
-    <input type="number" id="duracao" [(ngModel)]="duracao">
-</div>
-<div>
-    <label for="lancamento">Lançamento</label>
-    <input type="text" id="lancamento" [(ngModel)]="lancamento">
-</div>
-<div>
-    <label for="autor">Autor</label>
-    <input type="text" id="autor" [(ngModel)]="autor">
-</div>
-<div>
-    <label for="orcamento">Orçamento</label>
-    <input type="text" id="orcamento" [(ngModel)]="orcamento">
-</div>
-<div>
-    <label for="categoria">Categoria</label>
-    <input type="text" id="categoria" [(ngModel)]="categoria">
-</div>
-<button (click)="salvar()">Salvar</button>
+<p-dialog header="Cadastro Filme" [modal]="true" [(visible)]="visible" 
+    [style]="{ width: '50rem' }" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="nome" class="font-semibold w-6rem">Nome</label>
+        <input pInputText id="nome" class="flex-auto" [(ngModel)]="nome" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="duracao" class="font-semibold w-6rem">Duração</label>
+        <p-inputNumber
+            [(ngModel)]="duracao"
+            inputId="duracao"
+            mode="decimal"
+            [min]="30"
+            [max]="300" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="lancamento" class="font-semibold w-6rem">Lançamento</label>
+        <p-calendar 
+            [(ngModel)]="lancamento" inputId="lancamento" view="year" dateFormat="yy"
+            appendTo="body"/>
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="autor" class="font-semibold w-6rem">Autor</label>
+        <input pInputText id="autor" class="flex-auto" [(ngModel)]="autor" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="orcamento" class="font-semibold w-6rem">Orçamento</label>
+        <p-inputNumber
+            [(ngModel)]="orcamento"
+            inputId="orcamento"
+            mode="currency"
+            currency="BRL"
+            locale="pt-BR" /> 
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="categoria" class="font-semibold w-6rem">Categoria</label>
+        <p-dropdown 
+            [options]="categorias"
+            [(ngModel)]="categoria"
+            optionLabel="nome"
+            appendTo="body"
+            [filter]="true"
+            filterBy="nome"
+            placeholder="Escolha uma categoria" />
+    </div>
+    <!-- categoria-->
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+        <p-button label="Salvar" severity="success" icon="pi pi-check" (click)="salvar()"/>
+    </div>
+</p-dialog>

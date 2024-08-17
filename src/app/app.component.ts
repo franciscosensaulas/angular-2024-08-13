@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProdutoListaComponent } from './produto-lista/produto-lista.component';
 import { FilmeListaComponent } from './filme-lista/filme-lista.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,7 @@ import { FilmeListaComponent } from './filme-lista/filme-lista.component';
     RouterOutlet, // Componente Angular que atua como um componente de
     //  ancoragem ou contâiner onde os componentes serão renderizados
     FormsModule,
-    ProdutoListaComponent,
-    FilmeListaComponent,
+    NavbarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
