@@ -2,13 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
 interface Filme {
   id: number;
@@ -32,19 +37,21 @@ interface Filme {
     InputNumberModule,
     CalendarModule,
     DropdownModule,
+    ToastModule,
+    ConfirmDialogModule,
   ],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './filme-lista.component.html',
   styleUrl: './filme-lista.component.css'
 })
 export class FilmeListaComponent {
   filmes: Array<Filme> = [];
   carregandoFilmes: boolean = false;
-  httpClient: HttpClient;
 
   categorias = [
-    { "id": "Terror", "nome": "Terror"},
-    { "id": "Suspense", "nome": "Suspense"},
-    { "id": "Ação", "nome": "Ação"},
+    { "id": "Terror", "nome": "Terror" },
+    { "id": "Suspense", "nome": "Suspense" },
+    { "id": "Ação", "nome": "Ação" },
   ]
 
   visible: boolean = false;
@@ -55,11 +62,13 @@ export class FilmeListaComponent {
   autor: string = "";
   orcamento: number = 0;
   categoria: any = "";
-  
 
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
-    
+
+  constructor(
+    private httpClient: HttpClient,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -77,12 +86,29 @@ export class FilmeListaComponent {
     this.carregandoFilmes = false;
   }
 
-  apagar(id: number) {
-    this.httpClient.delete(`http://localhost:3000/filmes/${id}`)
-      .subscribe(x => this.apagouRegistro());
+  apagar(filme: Filme) {
+    this.confirmationService.confirm({
+      // target: event.target as EventTarget,
+      message: `Deseja realmente apagar '${filme.nome}'?`,
+      header: 'CUIDADO',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: "Sim",
+      rejectLabel: "Não",
+      // acceptIcon:"none",
+      // rejectIcon:"none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.httpClient.delete(`http://localhost:3000/filmes/${filme.id}`)
+          .subscribe(x => this.apagouRegistro());
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'success', detail: 'Seu registro não foi apagado.', life: 3000 });
+      }
+    });
   }
 
   apagouRegistro() {
+    this.messageService.add({ detail: "Registro apagado com sucesso", severity: "success" });
     // Atualizar os registros pois o filme foi apagado
     this.consultar();
   }
@@ -115,11 +141,12 @@ export class FilmeListaComponent {
     this.categoria = "";
   }
 
-  editar(){
-    
+  editar(id: number) {
+    // private router: Router,
+    this.router.navigate([`/filmes/${id}`]);
   }
 
-  showDialog(){
+  showDialog() {
     this.visible = true;
   }
 }

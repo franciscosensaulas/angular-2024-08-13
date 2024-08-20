@@ -10,22 +10,25 @@
       "categoria": "ficção científica"
     },
     {
-      "id": "2",
-      "nome": "Deadpool",
-      "duracao": 180,
-      "lancamento": "02-11-2017",
+      "nome": "Deadpool 3.0",
+      "duracao": 181,
       "autor": "Tim Miller",
+      "lancamento": "2027-01-01T03:00:00.000Z",
       "orcamento": 58000000,
-      "categoria": "Ação"
+      "categoria": {
+        "id": "Ação",
+        "nome": "Ação"
+      },
+      "id": "2"
     },
     {
-      "id": "5408",
       "nome": "qweqwe",
       "duracao": 2,
       "autor": "2",
-      "lancamento": "2",
+      "lancamento": "2027-01-01T03:00:00.000Z",
       "orcamento": "2",
-      "categoria": "2"
+      "categoria": "Ação",
+      "id": "5408"
     },
     {
       "id": "ac9f",
@@ -35,42 +38,6 @@
       "lancamento": "3",
       "orcamento": "3",
       "categoria": "3"
-    },
-    {
-      "id": "7aa1",
-      "nome": "2",
-      "duracao": 2,
-      "autor": "2",
-      "lancamento": "2",
-      "orcamento": "2",
-      "categoria": "2"
-    },
-    {
-      "id": "9207",
-      "nome": "Abacate",
-      "duracao": 200,
-      "autor": "20",
-      "lancamento": "100",
-      "orcamento": "30",
-      "categoria": "20"
-    },
-    {
-      "id": "5143",
-      "nome": "21312",
-      "duracao": 2,
-      "autor": "2",
-      "lancamento": "2",
-      "orcamento": "2",
-      "categoria": "2"
-    },
-    {
-      "id": "7017",
-      "nome": "asdasd",
-      "duracao": 30,
-      "autor": "3",
-      "lancamento": "2025-01-01T03:00:00.000Z",
-      "orcamento": 2220,
-      "categoria": "Suspense"
     }
   ]
 }

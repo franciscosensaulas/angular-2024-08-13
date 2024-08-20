@@ -1,3 +1,6 @@
+<p-toast />
+<p-confirmDialog />
+
 <h1>Lista de Filmes</h1>
 
 <button (click)="consultar()">Consultar</button>
@@ -30,14 +33,14 @@
                     label="Editar" 
                     severity="primary" 
                     icon="pi pi-pencil" 
-                    (click)="editar()"
+                    (click)="editar(filme.id)"
                     class="mr-2"
                     size="small"/>
                 <p-button 
                     label="Apagar" 
                     severity="danger" 
                     icon="pi pi-trash" 
-                    (click)="apagar(filme.id)"
+                    (click)="apagar(filme)"
                     size="small"/>
             </td>
         </tr>
